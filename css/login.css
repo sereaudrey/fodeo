@@ -1,0 +1,21 @@
+.box-login {
+    background: #cebde1;
+    width: 40%;
+    padding: 20px;
+    margin:25%;
+    height: 100px;
+}
+
+.login {
+    padding: 10px;
+}
+
+.input-login {
+    float: right;
+    width: 50%;
+}
+
+.btn {
+    margin: 5px;
+    width: 40%;
+}

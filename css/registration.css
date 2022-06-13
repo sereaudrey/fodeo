@@ -1,0 +1,16 @@
+.registration {
+    width: 50%;
+}
+
+.registration input{
+    width: 50%;
+    float: right;
+}
+
+.register {
+    padding: 10px;
+}
+
+.btn-register {
+    margin: 5% 20%;
+}
