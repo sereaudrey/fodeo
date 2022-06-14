@@ -1,0 +1,48 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+}
+.tuile_accueil {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+    text-align: center;
+    height: 290px;
+    box-shadow: 0 0 6px #ccc;
+    background: #76a6e157;
+    border-radius: 20px;
+    margin: 15px;
+    font-size: 2em;
+}
+
+.tuile-anim {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform cubic-bezier(0.5, 0.5, 0.1, 0.6) 400ms, opacity cubic-bezier(0.5, 0.5, 0.1, 0.6) 400ms;
+}
+.tuile-anim:hover {
+    transform: scale(1.3);
+    opacity: 0.5; 
+}
+
+.tuile-anim a {
+    color: grey;
+}
+
+i {
+    font-size: 50px;
+}
+
+a {
+    text-decoration: none;
+}

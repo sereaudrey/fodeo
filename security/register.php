@@ -10,31 +10,38 @@
 <body>
     <form class="registration" id="formRegistration" action="verif_register.php" method="POST">
         <div class="register">
-            <span>Choisissez un pseudo : </span>
+            <span>Choisissez un pseudo : *</span>
             <input type="text" name="username" required />
         </div>
         <div class="register">
-            <span>Email : </span>
-            <input type="email" name="email">
+            <span>Email : *</span>
+            <input type="email" name="email" required>
         </div>
         <div class="register">
-            <span>Choisissez un mot de passe : </span>
+            <span>Choisissez un mot de passe : *</span>
             <input type="password" name="password" required />
         </div>
         <div class="register">
-            <span>Saisissez une deuxième fois votre mot de passe : </span>
-            <input type="password" name="confirmPassword">
+            <span>Saisissez une deuxième fois votre mot de passe : *</span>
+            <input type="password" name="confirmPassword" required>
         </div>
         <div class="register">
-            <span>Quel est votre date de naissance ? </span>
+            <span>Quel est votre date de naissance ? *</span>
             <input type="date" name="birthday" required />
         </div>
-        <input type="submit" name="formRegister" class="btn-register" value="S'inscrire">
+        <div class="button_register">
+            <input type="submit" name="formRegister" class="btn-register" value="S'inscrire">
+            <input type="button" href="login.php" value="Se connecter">
+        </div><br>
     </form>
-    <?php
-    if(isset($message)) {
-        echo "oh oh, ".$message;
-    }
-    ?>
+    <div class="message-error">
+        <?php
+        session_start();
+        if(isset($_SESSION['message'])) {
+            echo $_SESSION['message'];
+            unset($_SESSION['message']);
+        }
+        ?>
+    </div>
 </body>
 </html>

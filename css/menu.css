@@ -1,3 +1,42 @@
-.login_menu, .username_menu {
+.username_menu {
+    padding-top: 8px;
+}
+nav {
+    font-size: 1.5em;
+}
+
+.logo {
+    border-radius: 5%;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.login {
+    margin: 20px 50px;
+    font-size: 2em;
+}
+.login a, footer a {
+    text-decoration: none;
+    color: grey;
+}
+.login a:hover, footer a:hover {
+    text-decoration: none;
+}
+
+footer {
+    background-color: #76a6e157;
+    height: 60px;
+    width: 100%;
+    position: fixed;
+}
+
+.contact {
     float: right;
+    padding: 12px;
+    font-size: 1.5em;
 }

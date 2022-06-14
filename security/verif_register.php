@@ -1,8 +1,8 @@
 <?php
+session_start();
     require('bddConfig.php');
-    var_dump($_POST['formRegistration']);
     //Si le formulaire est valide
-    if(isset($_POST['formRegistration'])) {
+    if(isset($_POST['formRegister'])) {
         //Déclaration des variables
         $username = htmlspecialchars($_POST['username']);
         $email = htmlspecialchars($_POST['email']);
@@ -11,14 +11,63 @@
         $birthday = htmlspecialchars($_POST['birthday']);
         $dateCreate = date('y-m-d');
 
+        //On vérifie si les champs sont remplis
         if(!empty($_POST['username']) and !empty($_POST['email']) and !empty($_POST['password']) and !empty($_POST['birthday'])) {
-            $query = $conn->prepare("INSERT into `users` (username, email, password, date_of_birth, created_at)
-            VALUES ('$username', '$email', '$password', '$birthday', '$dateCreate')");
-            $query->execute();
-            //$message = "Votre compte a bien été créé ! Cliquez ici pour vous <a href=\"login.php\">connecter</a>";
-            echo "Votre compte a bien été créé ! Cliquez ici pour vous <a href=\"login.php\">connecter</a>";
+           //On vérifie si le mail existe déjà dans la bdd
+            if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $emailBdd = $conn->prepare("SELECT email FROM users WHERE email = ?");
+                $emailBdd->execute(array($email)); 
+                $emailExist = $emailBdd->rowCount();
+                //Si l'email n'existe pas dans la bdd
+                if($emailExist == 0) {
+                    //On vérifie que le pseudo n'existe pas déjà dans la bdd
+                    $pseudo = $conn->prepare("SELECT * FROM users WHERE username=?");
+                    $pseudo->execute(array($username));
+                    $verifPseudo = $pseudo->rowCount();
+                    //var_dump($verifPseudo);die;
+                    if($verifPseudo == 0) {
+                        //si les mdp correspondent on fait la requete d'insertion
+                        if($password == $confirmPassword) {
+                            $query = $conn->prepare("INSERT into `users` (username, email, password, date_of_birth, created_at)
+                            VALUES ('$username', '$email', '$password', '$birthday', '$dateCreate')");
+                            $query->execute();
+                            $_SESSION['message'] = "Votre compte a bien été créé ! Cliquez ici pour vous <a href=\"login.php\">connecter</a>";
+                            echo $_SESSION['message'];
+                        } else {
+                            $_SESSION['message'] = "Vos mots de passe ne correspondent pas.";
+                            header('Location:register.php');
+                        }
+                    } else {
+                        $_SESSION['message'] = "Ce pseudo est déjà utilisé. Veuillez en choisir un autre";
+                        header('Location:register.php');
+                    }
+                } else {
+                    //Si l'email existe en bdd
+                    $_SESSION['message'] = "Adresse mail déjà utilisée ! Cliquez ici pour vous <a href=\"login.php\">connecter</a>";
+                    header('Location:register.php');
+                }
+            } else {
+                $_SESSION['message'] = "Votre adresse mail n'est pas valide";
+                header('Location:register.php');
+            }
+        } else {
+            $_SESSION['message'] = "Merci de compléter tous les champs.";
+            header('Location:register.php');
         }
     }
+
+
+
+
+           
+    //         //on prépare la requête
+    //         $query = $conn->prepare("INSERT into `users` (username, email, password, date_of_birth, created_at)
+    //         VALUES ('$username', '$email', '$password', '$birthday', '$dateCreate')");
+    //         $query->execute();
+    //         //$message = "Votre compte a bien été créé ! Cliquez ici pour vous <a href=\"login.php\">connecter</a>";
+    //         echo "Votre compte a bien été créé ! Cliquez ici pour vous <a href=\"login.php\">connecter</a>";
+    //     }
+    // }
 ?>
 <?php
 
